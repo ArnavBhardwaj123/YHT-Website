@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Panel - Angry Youth NGO</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fade show" style="display: block;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content admin-login-card">
+                <div class="modal-header border-0">
+                    <h4 class="modal-title text-center w-100">
+                        <i class="fas fa-shield-alt text-warning"></i> Admin Access
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <img src="images/angry-youth-ngo-bah-agra-ngos-avmiaeifb9-removebg-preview.png" 
+                             alt="Angry Youth NGO" style="max-height:60px;">
+                        <h5 class="mt-2">Angry Youth NGO</h5>
+                        <p class="text-muted">Administrative Dashboard</p>
+                    </div>
+                    
+                    <form id="adminLoginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="username" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-warning btn-block btn-lg">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (Hidden until login) -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <!-- Top Navigation -->
+        <nav class="admin-navbar">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <img src="images/angry-youth-ngo-bah-agra-ngos-avmiaeifb9-removebg-preview.png" 
+                         alt="Angry Youth NGO" style="max-height:40px;">
+                    <h4 class="mb-0 ml-3 text-white">Admin Dashboard</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="text-white mr-3">Welcome, <span id="adminName">Admin</span></span>
+                    <button class="btn btn-outline-light btn-sm" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 col-lg-2 admin-sidebar">
+                    <div class="sidebar-menu">
+                        <div class="menu-item active" onclick="showSection('dashboard')">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </div>
+                        <div class="menu-item" onclick="showSection('events')">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Events Management</span>
+                        </div>
+                        <div class="menu-item" onclick="showSection('testimonials')">
+                            <i class="fas fa-comments"></i>
+                            <span>Testimonials</span>
+                        </div>
+                        <div class="menu-item" onclick="showSection('settings')">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-9 col-lg-10 admin-content">
+                    <!-- Dashboard Section -->
+                    <div id="dashboardSection" class="content-section">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="section-title">Dashboard Overview</h2>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-icon bg-primary">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 id="totalEvents">0</h3>
+                                        <p>Total Events</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-icon bg-success">
+                                        <i class="fas fa-comments"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 id="totalTestimonials">0</h3>
+                                        <p>Testimonials</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-icon bg-warning">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 id="pendingApprovals">0</h3>
+                                        <p>Pending Approvals</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-icon bg-info">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 id="activeUsers">0</h3>
+                                        <p>Active Users</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Recent Events</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="recentEventsList">
+                                            <p class="text-muted">No recent events</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Recent Testimonials</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="recentTestimonialsList">
+                                            <p class="text-muted">No recent testimonials</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events Management Section -->
+                    <div id="eventsSection" class="content-section" style="display: none;">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="section-title">Events Management</h2>
+                                <p class="text-muted">Manage upcoming and previous events</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5>Add New Event</h5>
+                                        <button class="btn btn-success" onclick="openEventForm()">
+                                            <i class="fas fa-plus"></i> Add Event
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Event Title</label>
+                                                    <input type="text" class="form-control" id="eventTitle" placeholder="Enter event title">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Event Date</label>
+                                                    <input type="date" class="form-control" id="eventDate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Event Time</label>
+                                                    <input type="text" class="form-control" id="eventTime" placeholder="e.g., 9:00 AM - 4:00 PM">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Event Location</label>
+                                                    <input type="text" class="form-control" id="eventLocation" placeholder="Enter event location">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Event Description</label>
+                                            <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+                                        </div>
+                                        
+                                        <div class="text-right">
+                                            <button class="btn btn-primary" onclick="saveEvent()">
+                                                <i class="fas fa-save"></i> Save Event
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Upcoming Events</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="upcomingEventsList">
+                                            <p class="text-muted">No upcoming events</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Previous Events</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="previousEventsList">
+                                            <p class="text-muted">No previous events</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonials Section -->
+                    <div id="testimonialsSection" class="content-section" style="display: none;">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="section-title">Testimonials Management</h2>
+                                <p class="text-muted">Review and approve user testimonials</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Pending Approvals</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="pendingTestimonialsList">
+                                            <p class="text-muted">No pending testimonials</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Approved Testimonials</h5>
+                                        <small class="text-muted">Max 10 displayed</small>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="approvedTestimonialsList">
+                                            <p class="text-muted">No approved testimonials</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Section -->
+                    <div id="settingsSection" class="content-section" style="display: none;">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="section-title">Settings</h2>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Google Forms Integration</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Events Form URL</label>
+                                            <input type="url" class="form-control" id="eventsFormUrl" placeholder="Enter Google Form URL for events">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Testimonials Form URL</label>
+                                            <input type="url" class="form-control" id="testimonialsFormUrl" placeholder="Enter Google Form URL for testimonials">
+                                        </div>
+                                        
+                                        <button class="btn btn-primary" onclick="saveFormUrls()">
+                                            <i class="fas fa-save"></i> Save URLs
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>System Settings</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Auto-archive events after</label>
+                                            <select class="form-control" id="autoArchiveDays">
+                                                <option value="1">1 day</option>
+                                                <option value="3">3 days</option>
+                                                <option value="7" selected>1 week</option>
+                                                <option value="14">2 weeks</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Max testimonials displayed</label>
+                                            <input type="number" class="form-control" id="maxTestimonials" value="10" min="5" max="20">
+                                        </div>
+                                        
+                                        <button class="btn btn-primary" onclick="saveSystemSettings()">
+                                            <i class="fas fa-save"></i> Save Settings
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    <!-- Admin Panel JavaScript -->
+    <script>
+        // Admin Panel State Management
+        let currentUser = null;
+        let events = [];
+        let testimonials = [];
+        let settings = {
+            eventsFormUrl: '',
+            testimonialsFormUrl: '',
+            autoArchiveDays: 7,
+            maxTestimonials: 10
+        };
+
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            checkAuthStatus();
+            setupEventListeners();
+        });
+
+        // Authentication Functions
+        function checkAuthStatus() {
+            const savedUser = localStorage.getItem('adminUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard();
+            }
+        }
+
+        function login(username, password) {
+            // Simple authentication - in production, this should be server-side
+            if (username === 'admin' && password === 'admin123') {
+                currentUser = { username: username, name: 'Administrator' };
+                localStorage.setItem('adminUser', JSON.stringify(currentUser));
+                showDashboard();
+                return true;
+            }
+            return false;
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('adminUser');
+            showLogin();
+        }
+
+        function showLogin() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            document.getElementById('adminName').textContent = currentUser.name;
+            updateDashboard();
+        }
+
+        // Event Listeners Setup
+        function setupEventListeners() {
+            // Login form submission
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (login(username, password)) {
+                    showSuccessMessage('Login successful!');
+                } else {
+                    showErrorMessage('Invalid credentials. Use admin/admin123');
+                }
+            });
+
+            // Form inputs for events
+            document.getElementById('eventTitle').addEventListener('input', validateEventForm);
+            document.getElementById('eventDate').addEventListener('change', validateEventForm);
+            document.getElementById('eventTime').addEventListener('input', validateEventForm);
+            document.getElementById('eventLocation').addEventListener('input', validateEventForm);
+        }
+
+        // Dashboard Functions
+        function updateDashboard() {
+            updateStatistics();
+            updateRecentEvents();
+            updateRecentTestimonials();
+        }
+
+        function updateStatistics() {
+            const upcomingEvents = events.filter(e => new Date(e.date) > new Date()).length;
+            const pastEvents = events.filter(e => new Date(e.date) <= new Date()).length;
+            const pendingTestimonials = testimonials.filter(t => !t.approved).length;
+            const approvedTestimonials = testimonials.filter(t => t.approved).length;
+
+            document.getElementById('totalEvents').textContent = events.length;
+            document.getElementById('totalTestimonials').textContent = testimonials.length;
+            document.getElementById('pendingApprovals').textContent = pendingTestimonials;
+            document.getElementById('activeUsers').textContent = approvedTestimonials;
+        }
+
+        function updateRecentEvents() {
+            const recentEvents = events
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+
+            const container = document.getElementById('recentEventsList');
+            if (recentEvents.length === 0) {
+                container.innerHTML = '<p class="text-muted">No recent events</p>';
+                return;
+            }
+
+            container.innerHTML = recentEvents.map(event => `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <strong>${event.title}</strong>
+                        <br><small class="text-muted">${formatDate(event.date)} at ${event.time}</small>
+                    </div>
+                    <span class="badge badge-${new Date(event.date) > new Date() ? 'success' : 'secondary'}">
+                        ${new Date(event.date) > new Date() ? 'Upcoming' : 'Past'}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function updateRecentTestimonials() {
+            const recentTestimonials = testimonials
+                .filter(t => t.approved)
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+
+            const container = document.getElementById('recentTestimonialsList');
+            if (recentTestimonials.length === 0) {
+                container.innerHTML = '<p class="text-muted">No recent testimonials</p>';
+                return;
+            }
+
+            container.innerHTML = recentTestimonials.map(testimonial => `
+                <div class="mb-2">
+                    <strong>${testimonial.name}</strong>
+                    <br><small class="text-muted">${formatDate(testimonial.date)}</small>
+                    <br><em>"${testimonial.message}"</em>
+                </div>
+            `).join('');
+        }
+
+        // Section Navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Remove active class from all menu items
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionName + 'Section').style.display = 'block';
+
+            // Add active class to clicked menu item
+            event.target.closest('.menu-item').classList.add('active');
+
+            // Update section-specific content
+            switch(sectionName) {
+                case 'events':
+                    updateEventsLists();
+                    break;
+                case 'testimonials':
+                    updateTestimonialsLists();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
+            }
+        }
+
+        // Events Management
+        function openEventForm() {
+            // Clear form
+            document.getElementById('eventTitle').value = '';
+            document.getElementById('eventDate').value = '';
+            document.getElementById('eventTime').value = '';
+            document.getElementById('eventLocation').value = '';
+            document.getElementById('eventDescription').value = '';
+            
+            // Focus on first field
+            document.getElementById('eventTitle').focus();
+        }
+
+        function validateEventForm() {
+            const title = document.getElementById('eventTitle').value.trim();
+            const date = document.getElementById('eventDate').value;
+            const time = document.getElementById('eventTime').value.trim();
+            const location = document.getElementById('eventLocation').value.trim();
+            
+            const isValid = title && date && time && location;
+            
+            // Enable/disable save button
+            const saveBtn = document.querySelector('button[onclick="saveEvent()"]');
+            saveBtn.disabled = !isValid;
+            saveBtn.className = isValid ? 'btn btn-primary' : 'btn btn-secondary';
+            
+            return isValid;
+        }
+
+        function saveEvent() {
+            const eventData = {
+                id: Date.now(),
+                title: document.getElementById('eventTitle').value.trim(),
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value.trim(),
+                location: document.getElementById('eventLocation').value.trim(),
+                description: document.getElementById('eventDescription').value.trim(),
+                createdAt: new Date().toISOString()
+            };
+
+            if (!eventData.title || !eventData.date || !eventData.time || !eventData.location) {
+                showErrorMessage('Please fill in all required fields');
+                return;
+            }
+
+            events.push(eventData);
+            saveData();
+            updateDashboard();
+            updateEventsLists();
+            
+            // Clear form
+            openEventForm();
+            showSuccessMessage('Event saved successfully!');
+        }
+
+        function updateEventsLists() {
+            const now = new Date();
+            const upcomingEvents = events.filter(e => new Date(e.date) > now);
+            const previousEvents = events.filter(e => new Date(e.date) <= now);
+
+            // Update upcoming events
+            const upcomingContainer = document.getElementById('upcomingEventsList');
+            if (upcomingEvents.length === 0) {
+                upcomingContainer.innerHTML = '<p class="text-muted">No upcoming events</p>';
+            } else {
+                upcomingContainer.innerHTML = upcomingEvents.map(event => `
+                    <div class="event-item mb-3 p-3 border rounded">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">${event.title}</h6>
+                                <p class="mb-1 text-muted">${formatDate(event.date)} at ${event.time}</p>
+                                <p class="mb-1 text-muted">📍 ${event.location}</p>
+                                ${event.description ? `<p class="mb-0 small">${event.description}</p>` : ''}
+                            </div>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary btn-sm" onclick="editEvent(${event.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="deleteEvent(${event.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Update previous events
+            const previousContainer = document.getElementById('previousEventsList');
+            if (previousEvents.length === 0) {
+                previousContainer.innerHTML = '<p class="text-muted">No previous events</p>';
+            } else {
+                previousContainer.innerHTML = previousEvents.map(event => `
+                    <div class="event-item mb-3 p-3 border rounded bg-light">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">${event.title}</h6>
+                                <p class="mb-1 text-muted">${formatDate(event.date)} at ${event.time}</p>
+                                <p class="mb-1 text-muted">📍 ${event.location}</p>
+                                ${event.description ? `<p class="mb-0 small">${event.description}</p>` : ''}
+                            </div>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-danger btn-sm" onclick="deleteEvent(${event.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function editEvent(eventId) {
+            const event = events.find(e => e.id === eventId);
+            if (!event) return;
+
+            // Populate form with event data
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventDate').value = event.date;
+            document.getElementById('eventTime').value = event.time;
+            document.getElementById('eventLocation').value = event.location;
+            document.getElementById('eventDescription').value = event.description;
+
+            // Change save button to update
+            const saveBtn = document.querySelector('button[onclick="saveEvent()"]');
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Update Event';
+            saveBtn.onclick = () => updateEvent(eventId);
+            
+            // Scroll to form
+            document.getElementById('eventsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateEvent(eventId) {
+            const eventIndex = events.findIndex(e => e.id === eventId);
+            if (eventIndex === -1) return;
+
+            events[eventIndex] = {
+                ...events[eventIndex],
+                title: document.getElementById('eventTitle').value.trim(),
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value.trim(),
+                location: document.getElementById('eventLocation').value.trim(),
+                description: document.getElementById('eventDescription').value.trim(),
+                updatedAt: new Date().toISOString()
+            };
+
+            saveData();
+            updateDashboard();
+            updateEventsLists();
+            
+            // Reset form and button
+            openEventForm();
+            const saveBtn = document.querySelector('button[onclick="updateEvent(${eventId})"]');
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Event';
+            saveBtn.onclick = saveEvent;
+            
+            showSuccessMessage('Event updated successfully!');
+        }
+
+        function deleteEvent(eventId) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                events = events.filter(e => e.id !== eventId);
+                saveData();
+                updateDashboard();
+                updateEventsLists();
+                showSuccessMessage('Event deleted successfully!');
+            }
+        }
+
+        // Testimonials Management
+        function updateTestimonialsLists() {
+            const pendingTestimonials = testimonials.filter(t => !t.approved);
+            const approvedTestimonials = testimonials.filter(t => t.approved).slice(0, settings.maxTestimonials);
+
+            // Update pending testimonials
+            const pendingContainer = document.getElementById('pendingTestimonialsList');
+            if (pendingTestimonials.length === 0) {
+                pendingContainer.innerHTML = '<p class="text-muted">No pending testimonials</p>';
+            } else {
+                pendingContainer.innerHTML = pendingTestimonials.map(testimonial => `
+                    <div class="testimonial-item mb-3 p-3 border rounded">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">${testimonial.name}</h6>
+                                <p class="mb-1 text-muted">${formatDate(testimonial.date)}</p>
+                                <p class="mb-2">"${testimonial.message}"</p>
+                                ${testimonial.email ? `<small class="text-muted">📧 ${testimonial.email}</small>` : ''}
+                            </div>
+                            <div class="btn-group btn-group-sm ml-2">
+                                <button class="btn btn-success btn-sm" onclick="approveTestimonial(${testimonial.id})">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="rejectTestimonial(${testimonial.id})">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Update approved testimonials
+            const approvedContainer = document.getElementById('approvedTestimonialsList');
+            if (approvedTestimonials.length === 0) {
+                approvedContainer.innerHTML = '<p class="text-muted">No approved testimonials</p>';
+            } else {
+                approvedContainer.innerHTML = approvedTestimonials.map(testimonial => `
+                    <div class="testimonial-item mb-3 p-3 border rounded bg-light">
+                        <h6 class="mb-1">${testimonial.name}</h6>
+                        <p class="mb-1 text-muted">${formatDate(testimonial.date)}</p>
+                        <p class="mb-2">"${testimonial.message}"</p>
+                        <div class="text-right">
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteTestimonial(${testimonial.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function approveTestimonial(testimonialId) {
+            const testimonial = testimonials.find(t => t.id === testimonialId);
+            if (testimonial) {
+                testimonial.approved = true;
+                testimonial.approvedAt = new Date().toISOString();
+                saveData();
+                updateDashboard();
+                updateTestimonialsLists();
+                showSuccessMessage('Testimonial approved!');
+            }
+        }
+
+        function rejectTestimonial(testimonialId) {
+            if (confirm('Are you sure you want to reject this testimonial?')) {
+                testimonials = testimonials.filter(t => t.id !== testimonialId);
+                saveData();
+                updateDashboard();
+                updateTestimonialsLists();
+                showSuccessMessage('Testimonial rejected and removed!');
+            }
+        }
+
+        function deleteTestimonial(testimonialId) {
+            if (confirm('Are you sure you want to delete this testimonial?')) {
+                testimonials = testimonials.filter(t => t.id !== testimonialId);
+                saveData();
+                updateDashboard();
+                updateTestimonialsLists();
+                showSuccessMessage('Testimonial deleted!');
+            }
+        }
+
+        // Settings Management
+        function loadSettings() {
+            document.getElementById('eventsFormUrl').value = settings.eventsFormUrl;
+            document.getElementById('testimonialsFormUrl').value = settings.testimonialsFormUrl;
+            document.getElementById('autoArchiveDays').value = settings.autoArchiveDays;
+            document.getElementById('maxTestimonials').value = settings.maxTestimonials;
+        }
+
+        function saveFormUrls() {
+            settings.eventsFormUrl = document.getElementById('eventsFormUrl').value.trim();
+            settings.testimonialsFormUrl = document.getElementById('testimonialsFormUrl').value.trim();
+            saveData();
+            showSuccessMessage('Form URLs saved successfully!');
+        }
+
+        function saveSystemSettings() {
+            settings.autoArchiveDays = parseInt(document.getElementById('autoArchiveDays').value);
+            settings.maxTestimonials = parseInt(document.getElementById('maxTestimonials').value);
+            saveData();
+            showSuccessMessage('System settings saved successfully!');
+        }
+
+        // Utility Functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function showSuccessMessage(message) {
+            showMessage(message, 'success');
+        }
+
+        function showErrorMessage(message) {
+            showMessage(message, 'danger');
+        }
+
+        function showMessage(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Data Persistence
+        function saveData() {
+            localStorage.setItem('adminEvents', JSON.stringify(events));
+            localStorage.setItem('adminTestimonials', JSON.stringify(testimonials));
+            localStorage.setItem('adminSettings', JSON.stringify(settings));
+        }
+
+        function loadData() {
+            const savedEvents = localStorage.getItem('adminEvents');
+            const savedTestimonials = localStorage.getItem('adminTestimonials');
+            const savedSettings = localStorage.getItem('adminSettings');
+
+            if (savedEvents) events = JSON.parse(savedEvents);
+            if (savedTestimonials) testimonials = JSON.parse(savedTestimonials);
+            if (savedSettings) settings = JSON.parse(savedSettings);
+
+            // Load sample data if none exists
+            if (events.length === 0) {
+                loadSampleData();
+            }
+        }
+
+        function loadSampleData() {
+            // Sample events
+            events = [
+                {
+                    id: 1,
+                    title: "Children's Education Drive",
+                    date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    time: "9:00 AM - 4:00 PM",
+                    location: "Community Center, Agra",
+                    description: "Providing educational materials and support to underprivileged children",
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    title: "Women Empowerment Workshop",
+                    date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    time: "10:00 AM - 6:00 PM",
+                    location: "Women's Center, Agra",
+                    description: "Skills development and empowerment workshop for women",
+                    createdAt: new Date().toISOString()
+                }
+            ];
+
+            // Sample testimonials
+            testimonials = [
+                {
+                    id: 1,
+                    name: "Priya Sharma",
+                    email: "priya@example.com",
+                    message: "The education program changed my daughter's life. She's now confident and eager to learn.",
+                    date: new Date().toISOString(),
+                    approved: true,
+                    approvedAt: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    name: "Amit Kumar",
+                    email: "amit@example.com",
+                    message: "Great initiative for community development. Keep up the good work!",
+                    date: new Date().toISOString(),
+                    approved: false
+                }
+            ];
+
+            saveData();
+        }
+
+        // Auto-archive old events
+        function autoArchiveEvents() {
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - settings.autoArchiveDays);
+            
+            events = events.filter(event => {
+                const eventDate = new Date(event.date);
+                return eventDate > cutoffDate;
+            });
+            
+            saveData();
+        }
+
+        // Run auto-archive daily
+        setInterval(autoArchiveEvents, 24 * 60 * 60 * 1000);
+    </script>
+</body>
+</html>
