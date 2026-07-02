@@ -25,7 +25,7 @@
               </div>
               <span class="fund-raised d-block">{{ cause.raised }}</span>
               <div class="sponsor-button-container mt-3">
-                <router-link to="/donate" class="btn btn-primary py-2 px-4">Donate Now</router-link>
+                <a class="btn btn-primary py-2 px-4" href="https://www.youthhelpingtrust.org/donate-now/" target="_blank">Donate Now</a>
               </div>
             </div>
           </div>
@@ -67,12 +67,12 @@
 import { onMounted } from 'vue'
 
 const causes = [
-  { title: 'Skills for Stronger Women', desc: 'Empower women with skills in tailoring, crafts, and entrepreneurship to build financial independence.', urgency: 'Only ₹1,600 to reach this week\'s goal!', raised: '₹2,000 funds skill training for one woman.' },
-  { title: 'Learning for Life', desc: 'Give every child the right to dream — fund their education, books, and future.', urgency: 'Only ₹1,200 to reach this week\'s goal!', raised: '₹1,000 keeps a child in school for a month.' },
-  { title: 'Care for All', desc: 'Bring free medical check-ups, medicine, and health awareness to underserved families.', urgency: '₹1,050 more to heal 3 families this week!', raised: '₹1,500 brings healthcare to 3 families.' },
-  { title: 'Clean Water Access', desc: 'Install handpumps and filters so families can drink safe water year-round.', urgency: 'Just ₹600 more for clean water this week!', raised: '₹3,000 gives clean water to a family for a year.' },
-  { title: 'Feed the Hungry', desc: 'Serve warm, nutritious meals to children and families in need.', urgency: '₹900 more will feed 50 more plates!', raised: '₹500 serves a full meal to 10 people.' },
-  { title: 'Relief in Emergencies', desc: 'Provide fast relief during natural disasters with food, shelter, and medical aid.', urgency: '₹2,500 more to reach emergency aid goal!', raised: '₹5,000 supports 5 families during a crisis.' },
+  { title: 'Child Education', desc: 'Support education for underprivileged children — books, tuition and learning centers.', urgency: 'Help a child continue learning today.', raised: 'Your donation provides school supplies and teacher support.' },
+  { title: 'Medicine for Poor People', desc: 'Provide medical assistance, free health camps and medicines to families who cannot afford care.', urgency: 'Support our health outreach programs now.', raised: 'Your gift helps cover treatment and medicines.' },
+  { title: 'Vocational Training', desc: 'Train youth and women in practical skills like tailoring and trades to earn sustainable incomes.', urgency: 'Help someone gain a livelihood today.', raised: 'Sponsorships fund training materials and instructors.' },
+  { title: 'Swachh Bharat Mission', desc: 'Promote sanitation, clean surroundings and hygiene awareness in communities.', urgency: 'Support our sanitation drives today.', raised: 'Contributions fund community cleanups and hygiene kits.' },
+  { title: 'Beti Bachao Beti Padhao', desc: "Programs supporting girls' education, safety and welfare to secure brighter futures.", urgency: 'Help girls and young women access education.', raised: 'Your support funds scholarships and awareness programs.' },
+  { title: 'Women Empowerment', desc: 'Empower women through skill development and livelihood programs.', urgency: 'Join our women empowerment initiatives.', raised: 'Programs provide training, materials and mentoring.' },
 ]
 
 onMounted(() => {

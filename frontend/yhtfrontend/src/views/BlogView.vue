@@ -25,7 +25,7 @@
               </div>
               <h3 class="heading mb-4"><a href="#">{{ post.title }}</a></h3>
               <p>{{ post.excerpt }}</p>
-              <p><a href="#" class="btn btn-primary py-2 px-4 mt-2">Read More</a></p>
+              <p><a :href="post.url" target="_blank" class="btn btn-primary py-2 px-4 mt-2">Read More</a></p>
             </div>
           </div>
         </div>
@@ -38,12 +38,9 @@
 import { onMounted } from 'vue'
 
 const posts = [
-  { image: 'image_1.jpg', date: 'Dec 10, 2025', author: 'Admin', comments: 5, title: 'How We Reached 175,000 People with Our Food Drive', excerpt: 'In our biggest initiative yet, Angry Youth NGO distributed meals to over 175,000 people across Meerut and nearby regions.' },
-  { image: 'image_2.jpg', date: 'Nov 28, 2025', author: 'Admin', comments: 3, title: 'Women Empowerment Through Skill Training', excerpt: 'Our tailoring and crafts workshops have transformed the lives of 120 women, giving them financial independence.' },
-  { image: 'image_3.jpg', date: 'Nov 15, 2025', author: 'Admin', comments: 7, title: 'Clean Water for Villages: Our Water Project', excerpt: 'We installed 15 water filters and handpumps across 3 villages, giving 500+ families access to clean water.' },
-  { image: 'cause-1.jpg', date: 'Nov 1, 2025', author: 'Admin', comments: 4, title: 'Education Support: 480 Children Back in School', excerpt: 'Through book donations and tuition support, 480 children are now continuing their education thanks to our donors.' },
-  { image: 'cause-2.jpg', date: 'Oct 20, 2025', author: 'Admin', comments: 6, title: 'Emergency Relief: Supporting Flood Victims', excerpt: 'When floods struck nearby areas, we responded swiftly with food, shelter, and medical aid for affected families.' },
-  { image: 'cause-3.jpg', date: 'Oct 5, 2025', author: 'Admin', comments: 2, title: 'Health Camp Success: 1,000+ People Screened', excerpt: 'Our community health camp screened over 1,000 people for common ailments and distributed free medicines.' },
+  { image: 'image_1.jpg', date: 'Aug 28, 2021', author: 'Youth Helping Trust', comments: 12, title: 'How NGOs are ensuring their social responsibility commitment in the Covid-19 pandemic?', excerpt: 'Insights into NGO responses during COVID-19 and how Youth Helping Trust supported communities.', url: 'https://www.youthhelpingtrust.org/how-ngos-are-ensuring-their-social-responsibility-commitment-in-the-covid-19-pandemic/' },
+  { image: 'image_2.jpg', date: 'Aug 02, 2021', author: 'Youth Helping Trust', comments: 8, title: 'Top Ways to Help Poor and Homeless Children', excerpt: 'Practical actions and programs that make an immediate difference to children in need.', url: 'https://www.youthhelpingtrust.org/top-ways-to-help-poor-and-homeless-children/' },
+  { image: 'image_3.jpg', date: 'Jul 15, 2021', author: 'Youth Helping Trust', comments: 5, title: 'Our Programs: Child Education, Health & Women Empowerment', excerpt: 'Overview of Youth Helping Trust core programs and impact.', url: 'https://www.youthhelpingtrust.org/our-program/' },
 ]
 
 onMounted(() => {

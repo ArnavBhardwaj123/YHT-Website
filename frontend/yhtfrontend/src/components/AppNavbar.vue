@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <router-link to="/">
-        <img src="/images/angry-youth-ngo-bah-agra-ngos-avmiaeifb9-removebg-preview.png"
+        <img src="/images/angry-youth-ngo-bah-agra-ngos-avmiaeifb9-removebg-preview.png?v=1"
           alt="Angry_Youth_NGO" class="d-inline-block align-top" style="max-height:60px;">
       </router-link>
       <button class="navbar-toggler" type="button" id="mobile-menu-toggle" aria-label="Toggle navigation"
@@ -37,7 +37,7 @@
               Get Involved
             </a>
             <div class="dropdown-menu" aria-labelledby="involvedDropdown">
-              <router-link to="/donate" class="dropdown-item">Donate</router-link>
+              <a href="https://www.youthhelpingtrust.org/donate-now/" target="_blank" class="dropdown-item">Donate</a>
               <router-link to="/blog" class="dropdown-item">Blog</router-link>
             </div>
           </li>
@@ -54,7 +54,7 @@
   <div class="mobile-overlay" id="mobile-overlay" :class="{ active: mobileMenuOpen }">
     <div class="mobile-menu-container">
       <div class="mobile-menu-header">
-        <img src="/images/angry-youth-ngo-bah-agra-ngos-avmiaeifb9-removebg-preview.png"
+        <img src="/images/angry-youth-ngo-bah-agra-ngos-avmiaeifb9-removebg-preview.png?v=1"
           alt="Angry_Youth_NGO" style="max-height:50px;">
         <button class="mobile-close-btn" @click="closeMobileMenu">
           <span class="oi oi-x"></span>
@@ -80,7 +80,7 @@
             Get Involved <span class="dropdown-arrow">▼</span>
           </a>
           <ul class="mobile-dropdown-menu" :class="{ open: mobileDropdowns.involved }">
-            <li><router-link to="/donate" class="mobile-nav-link mobile-sub-link" @click="closeMobileMenu">Donate</router-link></li>
+            <li><a href="https://www.youthhelpingtrust.org/donate-now/" target="_blank" class="mobile-nav-link mobile-sub-link" @click="closeMobileMenu">Donate</a></li>
             <li><router-link to="/blog" class="mobile-nav-link mobile-sub-link" @click="closeMobileMenu">Blog</router-link></li>
           </ul>
         </li>

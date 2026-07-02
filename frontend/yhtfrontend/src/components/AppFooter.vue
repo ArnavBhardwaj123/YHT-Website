@@ -47,7 +47,7 @@
             <ul class="list-unstyled">
               <li><router-link to="/" class="py-2 d-block">Home</router-link></li>
               <li><router-link to="/about" class="py-2 d-block">About</router-link></li>
-              <li><router-link to="/donate" class="py-2 d-block">Donate</router-link></li>
+              <li><a href="https://www.youthhelpingtrust.org/donate-now/" target="_blank" class="py-2 d-block">Donate</a></li>
               <li><router-link to="/causes" class="py-2 d-block">Causes</router-link></li>
               <li><router-link to="/events" class="py-2 d-block">Event</router-link></li>
               <li><router-link to="/blog" class="py-2 d-block">Blog</router-link></li>
